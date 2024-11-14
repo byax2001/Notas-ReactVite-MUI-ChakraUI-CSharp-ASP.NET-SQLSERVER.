@@ -77,3 +77,23 @@ npm i @mui/lab
 ```
 npm i react-router-dom
 ```
+
+## Backend (ASP.NET Core)
+
+### Base del proyecto
+1. Buscar Biblioteca de clases a la hora de seleccionar la opción Nuevo proyecto
+2. Escoger el nombre del proyecto, ubicación y solución (La solución sera el nombre como se llamara la carpeta
+que creara como backend y tambien el archivo ejecutable .sln)
+3. Clic en "crear"
+
+### Librerias y Dependencias
+1. Clic derecho en el nombre del proyecto adentro de visual estudio y seleccionar la opcion "Adiminstrar Paquetes NuGet"
+2. Clic en la pestaña "Examinar"
+3. Buscar las siguientes librerias e instalar para conectar con sql server:
+```
+Microsoft.Entityframeworkcore
+Microsoft.Entityframeworkcore.Design
+Microsoft.Entityframeworkcore.SqlServer
+Microsoft.Entityframeworkcore.Tools
+
+```
