@@ -47,7 +47,7 @@ npm install @fontsource/roboto
 ```
 5. Posteriormente agregar estas importaciones en ``main.jsx`` para configurar la tipografía:
 
-```
+```jsx
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -59,7 +59,7 @@ import '@fontsource/roboto/700.css';
 ### Instalación de ``CssBaseline`` para Resetear Estilos del Navegador
 CssBaseline es una herramienta proporcionada por Material UI para resetear los estilos predeterminados del navegador y asegurar que los estilos aplicados no sean afectados por la configuración del navegador. Para añadirlo al proyecto agregar la siguiente importación:
 
-``` 
+```jsx 
 import { CssBaseline} from '@mui/material 
 ```
 
@@ -85,7 +85,11 @@ npm i react-router-dom
 1. Selecciona la opción `Nuevo Proyecto` y busca  y escoge `Biblioteca de Clases`.
 2. Asigna un nombre al proyecto, define su ubicación y crea una solución (la solución será el nombre de la carpeta que se generará como backend, así como el archivo ejecutable `.sln`).
 3. Hacer clic en `Crear`.
+4. Crea un gitignore usando el siguiente comando en la raiz del nuevo proyecto:
 
+```Powershell
+dotnet new gitignore --force
+```
 
 
 ### Librerias y Dependencias
@@ -119,3 +123,80 @@ Microsoft.Entityframeworkcore.Tools
 - Con este comando se generarán dos carpetas:
   - **Context**: Contendrá las clases de contexto.
   - **Models**: Contendrá las clases correspondientes a las tablas de la base de datos.
+
+Para agregar un modelo se debe dar clic derecho en la carpeta que hallamos definido como Models y se selecciona la opcion "Agregar"> "Clase" y se le da un nombre.
+
+### Pasos para Instalar y Configurar la API
+La API REST, encargada de recibir y responder a las solicitudes, no se crea automáticamente al configurar un proyecto con una `Biblioteca de Clases`. Por lo tanto, debe agregarse manualmente como un proyecto adicional.
+
+1. **Crear la API en ASP.NET Core Web API**
+   - Hacer clic derecho en el proyecto.
+   - Seleccionar la opción **Agregar > Nuevo Proyecto**.
+   - Eligir `ASP.NET Core Web API` como tipo de proyecto.
+   - Dejar las opciones por defecto y haz clic en **Crear**.
+
+2. **Establecer la API como Proyecto de Inicio**
+   - Hacer clic derecho sobre el proyecto de la API que acabas de crear.
+   - Seleccionar **Establecer como proyecto de Inicio** para que Visual Studio compile y ejecute esta API al iniciar el proyecto.
+
+3. **Agregar Referencia del Proyecto Base en la API**
+   - Hacer clic derecho sobre el proyecto de la API.
+   - Seleccionar **Agregar > Referencia del proyecto**.
+   - Marcar el proyecto base (backend) y haz clic en **Aceptar** para agregar la referencia.
+
+
+### Configuración de la API
+
+1. **Archivo `Program.cs`**
+   - Este archivo es el punto de entrada donde se ejecuta la API y se configuran ajustes iniciales.
+
+2. **Archivos de Ejemplo (`WeatherForecast.cs` y `WeatherForecastController.cs`)**
+   - Estos archivos, ubicados en la carpeta `Controllers`, son ejemplos generados por defecto y es recomendable eliminarlos para mantener la estructura de la API limpia.
+
+3. **Carpeta `Controllers`**
+   - En esta carpeta se definen los controladores, los cuales establecen los endpoints de la API (los puntos de acceso o rutas de la API).
+
+4. **Agregar un Controlador**
+   - Hacer clic derecho en la carpeta `Controllers`, seleccionar **Agregar > Controlador**.
+   - Eligir **API > Controlador de API en blanco**. Esto creará una plantilla similar a la siguiente:
+
+   ![image](https://github.com/user-attachments/assets/2301c0c7-8efd-4f4d-bb43-72527f3d4394)
+
+   > **Nota:** La URL de los endpoints incluirá, en este caso, `/api` seguido del nombre del controlador, de modo que las rutas se verán como `http://localhost:XXXX/api/[endpoint]`.
+
+5. **Página de Swagger para Probar Endpoints**
+   - Al ejecutar el backend, se abrirá la página de Swagger en `https://localhost:XXXX/swagger/index.html`. Algunos navegadores pueden alertar que esta página es riesgosa, pero Swagger es una herramienta similar a Postman que permite probar los endpoints.
+
+   ![image](https://github.com/user-attachments/assets/305846bb-bb93-40ff-8613-2cc55a283f47)
+
+6. **Formas de Crear un Endpoint**
+
+   - **Primera Forma**  
+     En este caso, la URL del endpoint será `http://localhost:XXXX/api/[NombreClase]`:
+
+     ```csharp
+     [HttpGet()]
+     public string Prueba()
+     {
+         return "Hola Mundo";
+     }
+     ```
+
+   - **Segunda Forma**  
+     Aquí, la URL será `http://localhost:XXXX/api/[endpoint]/[NombreClase]`:
+
+     ```csharp
+     [HttpGet("/Prueba")]
+     public string Prueba()
+     {
+         return "Hola Mundo";
+     }
+     ```
+  >De modo que la URL en el caso dos seria: **http://localhost:XXXX/api/Prueba/Prueba**
+
+7. **Verificación de Endpoints a Través de Swagger**
+   - Se puede consultar todos los endpoints de la API en la página generada automáticamente por Visual Studio al ejecutar la API.
+
+   ![image](https://github.com/user-attachments/assets/9196c355-7e5d-422a-a5e0-66f584e76698)
+
+   > **Nota:** Si no seve el botón **Execute** en la página de Swagger, hacer clic en **Try out** para habilitar la opción de prueba.
