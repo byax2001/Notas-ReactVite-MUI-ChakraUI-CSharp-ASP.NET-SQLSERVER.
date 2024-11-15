@@ -16,6 +16,7 @@ public partial class CalificacionesPContext : DbContext
     {
     }
 
+    //Se añade una s para que el nombre de la tabla sea en plural por defecto
     public virtual DbSet<Alumno> Alumnos { get; set; }
 
     public virtual DbSet<Asignatura> Asignaturas { get; set; }

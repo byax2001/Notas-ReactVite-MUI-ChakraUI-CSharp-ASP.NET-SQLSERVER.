@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")] //"api" acompaña el nombre del controlador de modo que las url seran http://localhost:XXXX/api/[endpoint]
+    [Route("api")] //"api" acompaña el nombre del controlador de modo que las url seran http://localhost:XXXX/api/[endpoint]
     [ApiController]
     public class PruebaController : ControllerBase
     {
-        [HttpGet()]
-        public string Prueba()
+        [HttpGet("prueba")]
+        public string prueba()
         {
             return "Hola Mundo";
         }

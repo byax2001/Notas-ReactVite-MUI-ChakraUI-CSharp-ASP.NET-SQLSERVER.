@@ -4,6 +4,7 @@ Pagina donde se utilizan las tecnologias de C# y Asp.net como backend, React com
 ## Frontend (React - Vite - Mui)
 
 ### Instalar React y Vite
+---
 1. Para iniciar una proyecto con react vite ejecutar el siguiente comando en la terminal, reemplazando ``nombre_minusculas`` por el nombre de tu proyecto::
 
 ```
@@ -22,6 +23,7 @@ npm create vite@latest nombre_minusculas
 npm i
 ```
 ### Instalar Mui
+---
 Página oficial [Material UI](https://mui.com/material-ui/getting-started/installation)
 
 1. Ejecutar el siguiente comando en el directorio del proyecto creado con Vite:
@@ -57,6 +59,7 @@ import '@fontsource/roboto/700.css';
 ![image](https://github.com/user-attachments/assets/3d11b9d5-5f6f-49bc-8cb3-2e4075010445)
 
 ### Instalación de ``CssBaseline`` para Resetear Estilos del Navegador
+---
 CssBaseline es una herramienta proporcionada por Material UI para resetear los estilos predeterminados del navegador y asegurar que los estilos aplicados no sean afectados por la configuración del navegador. Para añadirlo al proyecto agregar la siguiente importación:
 
 ```jsx 
@@ -66,6 +69,7 @@ import { CssBaseline} from '@mui/material
 ![image](https://github.com/user-attachments/assets/cf821ff7-0da5-493e-b8a0-753b83b212a5)
 
 ### Instalación de MUI Lab y React Router
+---
 1. Para obtener acceso a componentes experimentales de MUI, instalar Mui Lab:
 
 ```
@@ -81,6 +85,7 @@ npm i react-router-dom
 ## Backend (ASP.NET Core)
 
 ### Base del proyecto
+---
 
 1. Selecciona la opción `Nuevo Proyecto` y busca  y escoge `Biblioteca de Clases`.
 2. Asigna un nombre al proyecto, define su ubicación y crea una solución (la solución será el nombre de la carpeta que se generará como backend, así como el archivo ejecutable `.sln`).
@@ -93,6 +98,7 @@ dotnet new gitignore --force
 
 
 ### Librerias y Dependencias
+---
 1. Haz clic derecho sobre el proyecto en Visual Studio y selecciona `Administrar Paquetes NuGet`.
 2. Ve a la pestaña `Examinar` de la nueva ventana.
 3. Busca e instala las siguientes librerías para conectar con SQL Server:
@@ -122,11 +128,15 @@ Microsoft.Entityframeworkcore.Tools
 
 - Con este comando se generarán dos carpetas:
   - **Context**: Contendrá las clases de contexto.
-  - **Models**: Contendrá las clases correspondientes a las tablas de la base de datos.
+  - **Models**: Contendrá las clases correspondientes a las tablas de la base de datos. Estas clases también pueden servir como modelos para estructurar las respuestas de los endpoints de la API (Como respuestas Json). Si la respuesta de una consulta es compleja o contiene diversos atributos, será necesario crear un nuevo modelo que refleje la estructura deseada.
 
-Para agregar un modelo se debe dar clic derecho en la carpeta que hallamos definido como Models y se selecciona la opcion "Agregar"> "Clase" y se le da un nombre.
+- Agregar un Nuevo Modelo
+   - Hacer clic derecho en la carpeta definida como **Models**.
+   - Seleccionar la opción **Agregar > Clase**.
+   - Asignar un nombre representativo al modelo y posteriormente hacer clic en **Agregar**.
 
 ### Pasos para Instalar y Configurar la API
+---
 La API REST, encargada de recibir y responder a las solicitudes, no se crea automáticamente al configurar un proyecto con una `Biblioteca de Clases`. Por lo tanto, debe agregarse manualmente como un proyecto adicional.
 
 1. **Crear la API en ASP.NET Core Web API**
@@ -146,6 +156,7 @@ La API REST, encargada de recibir y responder a las solicitudes, no se crea auto
 
 
 ### Configuración de la API
+---
 
 1. **Archivo `Program.cs`**
    - Este archivo es el punto de entrada donde se ejecuta la API y se configuran ajustes iniciales.
@@ -172,27 +183,38 @@ La API REST, encargada de recibir y responder a las solicitudes, no se crea auto
 6. **Formas de Crear un Endpoint**
 
    - **Primera Forma**  
-     En este caso, la URL del endpoint será `http://localhost:XXXX/api/[NombreClase]`:
+     La URL del endpoint será `http://localhost:XXXX/api/[NombreControladorSinController]/[endpoint]`.  
+     En este caso, el nombre del controlador determina parte de la ruta, y el nombre del método define el segmento final.
 
      ```csharp
-     [HttpGet()]
-     public string Prueba()
-     {
-         return "Hola Mundo";
-     }
+      [Route("api/[controller]")] // "api" seguido del nombre del controlador define la URL base.
+      [ApiController]
+      public class PruebaController : ControllerBase
+      {
+         [HttpGet("prueba")] // Define el endpoint como "http://localhost:XXXX/api/Prueba/prueba"
+         public string prueba()
+         {
+            return "Hola Mundo";
+         }
+      }
      ```
 
    - **Segunda Forma**  
-     Aquí, la URL será `http://localhost:XXXX/api/[endpoint]/[NombreClase]`:
+     En esta forma, la URL del endpoint es más personalizada, eliminando la dependencia del nombre del controlador. La URL será `http://localhost:XXXX/api/[endpoint]`.
 
      ```csharp
-     [HttpGet("/Prueba")]
-     public string Prueba()
-     {
-         return "Hola Mundo";
-     }
+      [Route("api")] // Define una ruta fija, independiente del nombre del controlador.
+      [ApiController]
+      public class PruebaController : ControllerBase
+      {
+         [HttpGet("prueba")]// Define el endpoint como "http://localhost:XXXX/api/prueba"
+         public string prueba()
+         {
+            return "Hola Mundo";
+         }
+      }
      ```
-  >De modo que la URL en el caso dos seria: **http://localhost:XXXX/api/Prueba/Prueba**
+> **Nota:** En ambos casos, se puede ajustar las rutas según las necesidades utilizando atributos como `[Route]` y `[HttpGet]`. Recordar que "api" es un prefijo común para diferenciar los endpoints de la API.
 
 7. **Verificación de Endpoints a Través de Swagger**
    - Se puede consultar todos los endpoints de la API en la página generada automáticamente por Visual Studio al ejecutar la API.
