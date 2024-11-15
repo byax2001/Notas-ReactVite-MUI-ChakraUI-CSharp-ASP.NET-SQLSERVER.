@@ -81,15 +81,18 @@ npm i react-router-dom
 ## Backend (ASP.NET Core)
 
 ### Base del proyecto
-1. Buscar Biblioteca de clases a la hora de seleccionar la opción Nuevo proyecto
-2. Escoger el nombre del proyecto, ubicación y solución (La solución sera el nombre como se llamara la carpeta
-que creara como backend y tambien el archivo ejecutable .sln)
-3. Clic en "crear"
+
+1. Selecciona la opción `Nuevo Proyecto` y busca  y escoge `Biblioteca de Clases`.
+2. Asigna un nombre al proyecto, define su ubicación y crea una solución (la solución será el nombre de la carpeta que se generará como backend, así como el archivo ejecutable `.sln`).
+3. Hacer clic en `Crear`.
+
+
 
 ### Librerias y Dependencias
-1. Clic derecho en el nombre del proyecto adentro de visual estudio y seleccionar la opcion "Adiminstrar Paquetes NuGet"
-2. Clic en la pestaña "Examinar"
-3. Buscar las siguientes librerias e instalar para conectar con sql server:
+1. Haz clic derecho sobre el proyecto en Visual Studio y selecciona `Administrar Paquetes NuGet`.
+2. Ve a la pestaña `Examinar` de la nueva ventana.
+3. Busca e instala las siguientes librerías para conectar con SQL Server:
+
 ```
 Microsoft.Entityframeworkcore
 Microsoft.Entityframeworkcore.Design
@@ -97,3 +100,22 @@ Microsoft.Entityframeworkcore.SqlServer
 Microsoft.Entityframeworkcore.Tools
 
 ```
+4. Para conectar SQL Server con ASP.NET a través de Entity Framework y generar clases para las tablas de la base de datos, utiliza la siguiente cadena de conexión:
+- Haz clic en el menú `Herramientas` en Visual Studio.
+- Selecciona `Administrador de Paquetes NuGet`.
+- Abre la `Consola del Administrador de Paquetes`.
+- Escribe el siguiente comando (sin los corchetes `[]` y respetando las mayúsculas y minúsculas):
+
+  ```
+  Scaffold-DbContext "Server=[Escribir_Servidor]; Encrypt=False; DataBase=[Escribir_BaseDeDatos]; Trust Server Certificate=true; User Id=[Escribir_Usuario]; Password=[Escribir_Contraseña]; MultipleActiveResultSets=true" Microsoft.EntityFrameworkCore.SqlServer -ContextDir "[Escribir_Carpeta_Contexto]" -OutPutDir "[Escribir_Carpeta_Modelos]"
+  ```
+
+- En caso de que no se utilice contraseña, el comando sería:
+
+  ```
+  Scaffold-DbContext "Server=(Elnombredetuserver); Encrypt=False; DataBase=(Nombredelabasededatosquecreaste);Integrated Security=true" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models
+  ```
+
+- Con este comando se generarán dos carpetas:
+  - **Context**: Contendrá las clases de contexto.
+  - **Models**: Contendrá las clases correspondientes a las tablas de la base de datos.
