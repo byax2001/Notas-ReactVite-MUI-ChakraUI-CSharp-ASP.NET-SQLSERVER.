@@ -14,6 +14,8 @@ public partial class Calificacion
     public int Porcentaje { get; set; }
 
     public int MatriculaId { get; set; }
-
-    public virtual Matricula Matricula { get; set; } = null!;
+    //Esta variable es para la relación con la tabla Matricula, es decir, una calificación pertenece a una matrícula
+    //y una matrícula tiene muchas calificaciones, por lo que se usa el signo de interrogación para indicar que puede ser nulo
+    // los campos importantes se encuentran arriba
+    public virtual Matricula? Matricula { get; set; } = null!;
 }

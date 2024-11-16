@@ -135,6 +135,8 @@ Microsoft.Entityframeworkcore.Tools
    - Seleccionar la opción **Agregar > Clase**.
    - Asignar un nombre representativo al modelo y posteriormente hacer clic en **Agregar**.
 
+> NOTA: Recordar cambiar la clase creada del Modelo de `internal` a `public`
+
 ### Pasos para Instalar y Configurar la API
 ---
 La API REST, encargada de recibir y responder a las solicitudes, no se crea automáticamente al configurar un proyecto con una `Biblioteca de Clases`. Por lo tanto, debe agregarse manualmente como un proyecto adicional.
@@ -154,8 +156,7 @@ La API REST, encargada de recibir y responder a las solicitudes, no se crea auto
    - Seleccionar **Agregar > Referencia del proyecto**.
    - Marcar el proyecto base (backend) y haz clic en **Aceptar** para agregar la referencia.
 
-
-### Configuración de la API
+### Explicación de la API y Componentes
 ---
 
 1. **Archivo `Program.cs`**
@@ -222,3 +223,56 @@ La API REST, encargada de recibir y responder a las solicitudes, no se crea auto
    ![image](https://github.com/user-attachments/assets/9196c355-7e5d-422a-a5e0-66f584e76698)
 
    > **Nota:** Si no seve el botón **Execute** en la página de Swagger, hacer clic en **Try out** para habilitar la opción de prueba.
+
+
+### Configuración de CORS en la API
+
+Para habilitar CORS (Cross-Origin Resource Sharing) en tu API, sigue estos pasos:
+
+1. Abre el archivo `Program.cs` de tu proyecto API.
+
+2. Agrega las siguientes líneas de código para configurar y habilitar CORS:
+
+   ```csharp
+   // Configuración de CORS
+   builder.Services.AddCors(policyBuilder => policyBuilder.AddDefaultPolicy
+      (policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));
+
+   app.UseCors(); // Habilitar CORS
+   ```
+3.El archivo `Program.cs` debe quedar de la siguiente manera:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//Configuracion de CORS
+builder.Services.AddCors(policyBuilder => policyBuilder.AddDefaultPolicy
+    (policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseCors(); //Habilitar CORS
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+```
+>NOTA: El valor "*" permite el acceso desde cualquier origen. Si se desea limitar los orígenes permitidos, se debe de reemplazar con un listado específico de URLs. Por ejemplo: .WithOrigins("https://example.com", "https://anotherexample.com").
