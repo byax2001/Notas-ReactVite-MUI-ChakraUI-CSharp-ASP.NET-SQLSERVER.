@@ -1,7 +1,34 @@
 # Pagina-CSharp-ASP.NET-REACT-SQLSERVER
-Pagina donde se utilizan las tecnologias de C# y Asp.net como backend, React como frontend y Sql Server como base de datos
+Se desarrollará una página web utilizando C# y ASP.NET para el backend, React para el frontend y SQL Server como base de datos. El proyecto incluirá dos versiones del frontend, ambas creadas con React Vite: una implementará Material-UI (MUI) y la otra Chakra UI. Se comparara el rendimiento y estilo de ambas tecnologias.
 
-## Frontend (React - Vite - Mui)
+
+# Índice
+
+## Introducción
+- [Descripción del proyecto](#descripción-del-proyecto)
+
+## Frontend
+- [Frontend con `React`, `Vite` y `Material-UI (MUI)`](#frontend-react-vite-y-material-ui)
+  - [Instalar React y Vite](#instalar-react-y-vite)
+  - [Instalar MUI](#instalar-mui)
+  - [Instalación de `CssBaseline` para resetear estilos](#instalación-de-cssbaseline-para-resetear-estilos-del-navegador)
+  - [Instalación de MUI Lab y React Router](#instalación-de-mui-lab-y-react-router)
+- [Frontend con `React`, `Vite` y `Chakra UI`](#frontend-react-vite-y-chakra-ui)
+
+## Backend
+- [Configuración del proyecto base](#base-del-proyecto)
+- [Librerías y dependencias](#librerías-y-dependencias)
+- [Pasos para instalar y configurar la API](#pasos-para-instalar-y-configurar-la-api)
+  - [Explicación de la API y sus componentes](#explicación-de-la-api-y-componentes)
+  - [Agregar un nuevo controlador](#agregar-un-controlador)
+  - [Swagger para probar endpoints](#página-de-swagger-para-probar-endpoints)
+  - [Formas de crear un endpoint](#formas-de-crear-un-endpoint)
+- [Configuración de CORS](#configuración-de-cors-en-la-api)
+
+## Descripción del Proyecto
+El proyecto consistira en una pagina web de calificaciones en la cual x , para dichos metodos se realizaran desde peticionese inserciones normales hasta inner joins
+
+## Frontend `React Vite` y `Material UI`
 
 ### Instalar React y Vite
 ---
@@ -81,6 +108,33 @@ npm i @mui/lab
 ```
 npm i react-router-dom
 ```
+
+
+## Frontend `React Vite` y `Chakra UI`
+
+### Anotaciones:
+
+En este caso se exportara  la funcion del archivo app.jsx de esta forma (en lugar de dejarlo como esta por default):
+```jsx
+export default function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+    {/* Aquí ira el codigo del app.jsx que en este caso sera para los routes*/}
+    </>
+  )
+}
+```
+### Intalar Chakra UI
+1. Colocar este codigo en la raiz del proyecto:
+```
+npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
+```
+
+
+
+
 
 ## Backend (ASP.NET Core)
 

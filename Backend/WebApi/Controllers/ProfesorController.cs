@@ -19,9 +19,9 @@ namespace WebApi.Controllers
             var prof = profesorDAO.login(profesor.Usuario, profesor.Pass);
             if(prof != null)
             {
-                return "Bienvenido " + prof.Nombre;
+                return prof.Nombre;
             }
-            return "Usuario o contraseña incorrectos";
+            return null;
         }
     }
 }
