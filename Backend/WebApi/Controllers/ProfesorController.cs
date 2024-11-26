@@ -21,7 +21,7 @@ namespace WebApi.Controllers
             {
                 return prof.Nombre;
             }
-            return null;
+            return "no existe";
         }
     }
 }

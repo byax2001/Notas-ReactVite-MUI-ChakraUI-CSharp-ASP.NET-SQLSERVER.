@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|c:\\users\\brand\\documents\\proyectosusac\\clases\\pagina-csharp-asp.net-react-sqlserver\\backend\\backend\\operaciones\\alumnodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|solutionrelative:backend\\operaciones\\alumnodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3EFEED00-C548-4806-A93B-D01F7D500154}|WebApi\\WebApi.csproj|c:\\users\\brand\\documents\\proyectosusac\\clases\\pagina-csharp-asp.net-react-sqlserver\\backend\\webapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EFEED00-C548-4806-A93B-D01F7D500154}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|c:\\users\\brand\\documents\\proyectosusac\\clases\\pagina-csharp-asp.net-react-sqlserver\\backend\\backend\\operaciones\\profesordao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|solutionrelative:backend\\operaciones\\profesordao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|c:\\users\\brand\\documents\\proyectosusac\\clases\\pagina-csharp-asp.net-react-sqlserver\\backend\\backend\\operaciones\\alumnodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4C744988-5114-4B0D-AE95-7AE683240AD0}|backend\\backend.csproj|solutionrelative:backend\\operaciones\\alumnodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3EFEED00-C548-4806-A93B-D01F7D500154}|WebApi\\WebApi.csproj|c:\\users\\brand\\documents\\proyectosusac\\clases\\pagina-csharp-asp.net-react-sqlserver\\backend\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,24 +30,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ProfesorController.cs",
               "DocumentMoniker": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\WebApi\\Controllers\\ProfesorController.cs",
               "RelativeDocumentMoniker": "WebApi\\Controllers\\ProfesorController.cs",
               "ToolTip": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\WebApi\\Controllers\\ProfesorController.cs",
               "RelativeToolTip": "WebApi\\Controllers\\ProfesorController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-25T00:34:57.854Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ProfesorDAO.cs",
               "DocumentMoniker": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\backend\\Operaciones\\ProfesorDAO.cs",
               "RelativeDocumentMoniker": "backend\\Operaciones\\ProfesorDAO.cs",
@@ -60,13 +60,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AlumnoDAO.cs",
               "DocumentMoniker": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\backend\\Operaciones\\AlumnoDAO.cs",
               "RelativeDocumentMoniker": "backend\\Operaciones\\AlumnoDAO.cs",
               "ToolTip": "C:\\Users\\brand\\Documents\\ProyectosUsac\\Clases\\Pagina-CSharp-ASP.NET-REACT-SQLSERVER\\Backend\\backend\\Operaciones\\AlumnoDAO.cs",
               "RelativeToolTip": "backend\\Operaciones\\AlumnoDAO.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwA4AAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwCEAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-25T00:34:31.072Z",
               "EditorCaption": ""

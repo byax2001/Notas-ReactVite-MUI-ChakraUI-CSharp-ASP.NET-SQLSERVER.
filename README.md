@@ -14,6 +14,9 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
   - [Instalación de `CssBaseline` para resetear estilos](#instalación-de-cssbaseline-para-resetear-estilos-del-navegador)
   - [Instalación de MUI Lab y React Router](#instalación-de-mui-lab-y-react-router)
 - [Frontend con `React`, `Vite` y `Chakra UI`](#frontend-react-vite-y-chakra-ui)
+  - [Instalar `Chakra UI`](#instalar-chakra-ui)
+  - [Iconos en `Chakra`](#iconos-en-chakra)
+  - [Formularios con `Chakra UI`](#formularios-con-chakra-ui)
 
 ## Backend
 - [Configuración del proyecto base](#base-del-proyecto)
@@ -49,6 +52,43 @@ npm create vite@latest nombre_minusculas
 ```
 npm i
 ```
+4. Elimina la configuración predeterminada de App.css y index.css en la carpeta src, ya que podría interferir con el resultado esperado de Chakra UI. Puedes reemplazar el contenido del archivo index.css o en App.css con lo siguiente:
+```css
+#root {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+```
+   - **Root**:
+      - **`padding: 0` y `margin: 0`**: Elimina cualquier margen o relleno por defecto en el contenedor `#root`, que es el contenedor principal donde se monta toda la aplicación en React.
+      - **`min-height: 100vh`**: Asegura que el contenedor `#root` ocupe al menos el 100% de la altura de la ventana del navegador, lo que garantiza que siempre cubra toda la pantalla.
+      - **`width: 100%`**: Hace que el contenedor `#root` ocupe todo el ancho disponible de la pantalla.
+
+   - **Body**:
+      - **`margin: 0` y `padding: 0`**: Elimina cualquier margen o relleno por defecto en el `body` para evitar desplazamientos o espacios extra alrededor del contenido.
+      - **`display: flex`**: Configura el `body` como un contenedor `flexbox`, lo que facilita la alineación de los elementos dentro de él.
+      - **`place-items: center`**: Usa esta propiedad de flexbox para centrar los elementos hijos (en este caso, los componentes de React) tanto horizontal como verticalmente. Es equivalente a usar `justify-content: center` y `align-items: center` al mismo tiempo.
+      - **`min-width: 320px`**: Establece un ancho mínimo de 320 píxeles para el `body`, asegurando que el diseño sea accesible incluso en dispositivos pequeños.
+      - **`min-height: 100vh`**: Asegura que el `body` ocupe al menos la altura completa de la ventana del navegador.
+
+
+
+
+
+
+
+
 ### Instalar Mui
 ---
 Página oficial [Material UI](https://mui.com/material-ui/getting-started/installation)
@@ -111,30 +151,83 @@ npm i react-router-dom
 
 
 ## Frontend `React Vite` y `Chakra UI`
-
-### Anotaciones:
-
-En este caso se exportara  la funcion del archivo app.jsx de esta forma (en lugar de dejarlo como esta por default):
-```jsx
-export default function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-    {/* Aquí ira el codigo del app.jsx que en este caso sera para los routes*/}
-    </>
-  )
-}
-```
-### Intalar Chakra UI
-1. Colocar este codigo en la raiz del proyecto:
+### Instalar Chakra UI
+1. Ejecuta el siguiente comando en la raíz del proyecto para instalar Chakra UI y sus dependencias necesarias:
 ```
 npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
 ```
+2. Elimina la configuración por defecto en los archivos App.css y index.css en la carpeta src, ya que puede interferir con el resultado que genera Chakra UI. Puedes reemplazar su contenido por lo siguiente en index.css o App.css:
+```css
+#root {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+}
 
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+```
+3. Configura el `ChakraProvider` y el sistema en el archivo `main.jsx` de la siguiente manera:
 
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App'
+import { ChakraProvider, createSystem, defineConfig } from "@chakra-ui/react";
+import { system } from "@chakra-ui/react/preset";
 
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <ChakraProvider value={system}>
+      <App />
+    </ChakraProvider>
+  </StrictMode>,
+)
+```
+### Iconos en Chakra
+**Comando para instalar la librería de iconos** (opcional):
 
+  ```bash
+  npm i react-icons
+  ```
+Para ver la libreria de iconos revisar su pagina oficial [React-Icons](https://react-icons.github.io/react-icons/)
+
+### Formularios con Chakra UI:
+Para usar formularios con Chakra UI seguir los siguientes pasos:
+1. Instalar la librería de control de formularios:
+```bash
+npm i @chakra-ui/form-control
+```
+2. Importa los componentes necesarios de la siguiente forma:
+```jsx
+import {
+   FormControl,
+   FormLabel,
+   FormErrorMessage,
+   FormHelperText,
+   FormErrorIcon,
+} from "@chakra-ui/form-control"
+```
+### Tablas en Chakra UI:
+Para manejar tablas en tu proyecto con Chakra UI, puedes optar por una biblioteca externa como React Data Table Component, ya que la versión actual de Chakra UI no cuenta con soporte completo para tablas estilizadas de manera nativa.
+1. Ejecuta el siguiente comando para instalar la biblioteca:
+```bash
+npm i react-data-table-component
+```
+2. Utiliza el siguiente import para incorporar los componentes necesarios en tu proyecto:
+```jsx
+import DataTable from "react-data-table-component";
+```
+
+Con esta solución, puedes crear tablas con funcionalidades avanzadas como paginación, ordenamiento y personalización de estilos.
 
 ## Backend (ASP.NET Core)
 
