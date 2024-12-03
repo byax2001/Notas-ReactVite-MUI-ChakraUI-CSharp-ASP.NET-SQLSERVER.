@@ -17,6 +17,7 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
   - [Instalar `Chakra UI`](#instalar-chakra-ui)
   - [Iconos en `Chakra`](#iconos-en-chakra)
   - [Formularios con `Chakra UI`](#formularios-con-chakra-ui)
+  - [Tablas en `Chakra UI`](#tablas-en-chakra-ui)
 
 ## Backend
 - [Configuración del proyecto base](#base-del-proyecto)

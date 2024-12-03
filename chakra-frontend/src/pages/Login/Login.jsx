@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import { login } from "../../services/data"; // Se importa asi ya que a la exportacion del login no se le puso "default" de extra
 import {
   Box,
@@ -19,15 +20,38 @@ import {
 } from "@chakra-ui/form-control";
 import notes from "./image/notes.png";
 import { CiLogin } from "react-icons/ci";
+import Swal from 'sweetalert2'
+
 
 export default function Login() {
-  const [usuario, setUsuario] = useState("");
-  const [pass, setPass] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     const { usuario, pass } = Object.fromEntries(new FormData(e.target));
+    const response = await login(usuario, pass);
+    if(response=="no existe"){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Usuario o contraseña incorrectos',
+      })
+    }else{
+      navigate("/Home");
+      // Guardar el usuario en el sessionStorage
+      // La diferencia entre sessionStorage y localStorage es que el primero se borra al cerrar la pestaña
+      // mientras que el segundo se mantiene guardado hasta que se borre manualmente o se borren los datos del navegador
+      // sessionStorage es util para mantener la sesion activa mientras se navega por la pagina
+      // En este caso se prefirio usar SessionStorage
+      sessionStorage.setItem("user",response);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Bienvenido',
+        text: 'Inicio de sesión exitoso',
+      })
+    }
+
   }
 
   return (

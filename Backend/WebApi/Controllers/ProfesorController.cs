@@ -19,7 +19,7 @@ namespace WebApi.Controllers
             var prof = profesorDAO.login(profesor.Usuario, profesor.Pass);
             if(prof != null)
             {
-                return prof.Nombre;
+                return prof.Usuario;
             }
             return "no existe";
         }

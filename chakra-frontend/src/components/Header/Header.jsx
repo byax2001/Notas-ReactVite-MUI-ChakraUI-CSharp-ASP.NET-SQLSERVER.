@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
-import { Button, Grid, GridItem, Box } from "@chakra-ui/react";
+import { Button, Grid, GridItem, Box,Image } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import school from "./components/school.png"
 
 export default function HeaderPage() {
+  const navigate = useNavigate();
+  const cerrarSesion =() => {
+    // Se elimina el usuario de la sesión
+    sessionStorage.removeItem("user")
+    navigate("/");
+  }
   /*
     const breakpoints = {
         base: "0em", // Øpx
@@ -40,7 +48,8 @@ export default function HeaderPage() {
       >
         {/* Sección de Links */}
         <GridItem colSpan={{ base: 1, sm: 2, md: 3, lg: 2 }}>
-          <Box display="flex" gap={4}>
+          <Box display="flex" gap={4} alignItems="center">
+            <Image src={school} alt="school" maxHeight={"50px"} />
             <Link
               to="/Home"
               style={{
@@ -52,7 +61,7 @@ export default function HeaderPage() {
               Listado
             </Link>
             <Link
-              to="/create"
+              to="/regAl"
               style={{
                 textDecoration: "none",
                 color: "white",
@@ -79,6 +88,7 @@ export default function HeaderPage() {
               transform: "translateY(4px)", // Desplazamiento hacia abajo
             }}
             transition="transform 0.2s ease-out" // Suaviza el desplazamiento
+            onClick={cerrarSesion}
           >
             Cerrar Sesión
           </Button>
