@@ -21,13 +21,14 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
 
 ## Backend
 - [Configuración del proyecto base](#base-del-proyecto)
-- [Librerías y dependencias](#librerías-y-dependencias)
+- [Librerías y dependencias](#librerias-y-dependencias)
 - [Pasos para instalar y configurar la API](#pasos-para-instalar-y-configurar-la-api)
   - [Explicación de la API y sus componentes](#explicación-de-la-api-y-componentes)
   - [Agregar un nuevo controlador](#agregar-un-controlador)
   - [Swagger para probar endpoints](#página-de-swagger-para-probar-endpoints)
   - [Formas de crear un endpoint](#formas-de-crear-un-endpoint)
 - [Configuración de CORS](#configuración-de-cors-en-la-api)
+- [Errores de Versiones y Actualización del Backend](#errores-de-versiones-y-actualizacion-del-backend)
 
 ## Descripción del Proyecto
 El proyecto consistira en una pagina web de calificaciones en la cual x , para dichos metodos se realizaran desde peticionese inserciones normales hasta inner joins
@@ -233,7 +234,8 @@ Con esta solución, puedes crear tablas con funcionalidades avanzadas como pagin
 ## Backend (ASP.NET Core)
 
 ### Base del proyecto
----
+
+> **NOTA IMPORTANTE**: Para simplificar el proceso, se puede crear directamente el componente Web API. Esto elimina la necesidad de trabajar con múltiples proyectos. Además, al ejecutar el comando para configurar el ORM Entity Framework y conectar el backend con la base de datos, se generarán automáticamente las carpetas como `Models`, `Controllers`, entre otras, dentro del mismo componente de la API. Si se desea seguir este enfoque, se puede omitir los pasos iniciales y proceder directamente a la creación de la API y la instalación de las librerías necesarias.
 
 1. Selecciona la opción `Nuevo Proyecto` y busca  y escoge `Biblioteca de Clases`.
 2. Asigna un nombre al proyecto, define su ubicación y crea una solución (la solución será el nombre de la carpeta que se generará como backend, así como el archivo ejecutable `.sln`).
@@ -424,3 +426,101 @@ app.MapControllers();
 app.Run();
 ```
 >NOTA: El valor "*" permite el acceso desde cualquier origen. Si se desea limitar los orígenes permitidos, se debe de reemplazar con un listado específico de URLs. Por ejemplo: .WithOrigins("https://example.com", "https://anotherexample.com").
+---
+
+### APPSetting y Variables de Entorno
+Las variables de entorno se configuran en el archivo `appsettings.json`. Aquí se definen parámetros clave que la aplicación necesita para funcionar, como cadenas de conexión, configuraciones de servicios y valores sensibles como claves secretas o tokens. 
+
+![AppSetting](https://github.com/user-attachments/assets/ce1c6f12-2a4d-445b-80f7-7df1e173a0ef)
+
+Un ejemplo típico es:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=mi_base_de_datos;User Id=usuario;Password=contraseña;"
+  },
+  "JwtSettings": {
+    "SecretKey": "clave_secreta_muy_segura",
+    "Issuer": "https://miapi.com",
+    "Audience": "https://miapi.com"
+  }
+}
+```
+
+
+
+
+---
+
+### JWT (JSON Web Token)
+
+El sistema JWT asegura que los endpoints de la API sean accesibles únicamente para usuarios autenticados mediante un proceso de login, otorgando un token que será validado en cada solicitud.
+
+#### Configuración de las Variables de Tokens
+
+1. **Crear una llave privada**  
+   Genera una clave privada, preferiblemente un texto complejo difícil de deducir, como un hash SHA-256. Puedes usar la herramienta [Online Converter](https://hash.online-convert.com/es/generador-sha256) para convertir un texto en un hash. Copia el resultado hexadecimal y úsalo como clave secreta. Ejemplo:  
+   ```json
+   "SecretKey": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   ```
+
+2. **Issuer**  
+   Define la URL base donde se están publicando las APIs. Esto identifica el emisor del token. Ejemplo:  
+   ```json
+   "Issuer": "http://localhost:7200"
+   ```
+
+3. **Audience**  
+   Indica el público objetivo que puede usar los tokens emitidos. Esto asegura que el token sea válido solo para las aplicaciones o servicios permitidos. Ejemplo:  
+   ```json
+   "Audience": "http://localhost:7200"
+   ```
+
+4. **Subject**  
+   Define el propósito o el contexto del token, indicando su uso principal en la aplicación. Puede ser útil para identificar el alcance del token. Ejemplo:  
+   ```json
+   "Subject": "Autenticación de usuarios"
+   ```
+#### Instalación de Paquetes Necesarios
+Se deben de instalar los paquetes a traves de NuGet asi como se indico en secciones anteriores en este caso sobre el componente Web Api clic derecho > Adminsitrar Paquetes Nuget  o tambien a traves del comando Install-Package  namepaquete.extension  /  Install-Package namepaquete.extension - Version  #.#.#.#
+
+Los paquetes a instalar son: 
+```
+3.1. Microsoft.AspNetCore.Authentication.JwtBearer
+3.2. Microsoft.EntityFrameworkCore.Tools  (si aun no se ha instalado o si no se ha realizacionado web api con una solucion que ya lo instalo)
+3.3. Newtonsoft.Json
+3.4. Swashbuckle.AspNetCore
+3.5. Swashbuckle.AspNetCore.Swagger
+```
+
+
+
+
+
+
+---
+### Errores de Versiones y Actualizacion del Backend
+
+En el caso de que el backend esté dando errores de versión, o ya no se puedan instalar librerías en NuGet porque la versión .NET del proyecto está desactualizada, realiza lo siguiente:
+
+1. Verificar si no hay alguna actualización nueva por realizar en Visual Studio a través de la opción `Ayuda` > `Buscar Actualizaciones`.
+
+2. **Instalar el Upgrade Assistant**  
+   Desarrollado por Microsoft para actualizar proyectos de una versión .NET antigua a una actual:
+   - Ingresar el siguiente comando en la terminal de `Herramientas` > `Administrador de Paquetes NuGet` > `Consola de Administrador de Paquetes`:
+      ```powershell
+      dotnet tool install -g upgrade-assistant
+      ```
+   - Abrir PowerShell y navegar al directorio central del proyecto (hacer clic derecho en la solución > `Abrir en explorador`).
+   - Dependiendo de cuántos paquetes existan, realizar el siguiente procedimiento (en este caso hay 3):
+      ![PaquetesProyecto](https://github.com/user-attachments/assets/e498eedc-2242-49f2-b56c-c41caea2671a)
+      1. Ingresar al directorio del paquete.
+      2. Escribir `ls` y revisar el contenido, busca el archivo con la extensión `.csproj`.
+      3. Escribir el siguiente comando:
+         ```powershell
+         upgrade-assistant upgrade .\name_paquete.csproj
+         ```
+      4. Aparecerá el siguiente menú:
+         ![MenuUpgrade](https://github.com/user-attachments/assets/fadfc0d1-238e-49ce-a863-b692386a0c33)
+      5. Escoger la opción `framework.inplace` y luego escribir la tecla "y" y presionar Enter. Dejar que el proceso continúe, realizar esto con cada paquete que exista.
