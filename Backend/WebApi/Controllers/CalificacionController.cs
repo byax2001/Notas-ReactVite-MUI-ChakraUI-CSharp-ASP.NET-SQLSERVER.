@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Operaciones;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,10 @@ namespace WebApi.Controllers
         //Declarar el objeto que contiene los metodos a utilizar en el controlador
         CalificacionesDAO caliDAO = new CalificacionesDAO();
 
+
+
         //Obtener todas las calificaciones de una matricula (Tareas, Ejercicios, Examenes, etc)
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpGet("calificaciones")]
         public List<Calificacion> calificacions(int idmatricula)
         {
@@ -20,6 +24,7 @@ namespace WebApi.Controllers
         }
 
         //Ingresar una calificacion
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpPost("calificaciones")]
         public Boolean ingresarCalificacion([FromBody] Calificacion calificacion)
         {
@@ -27,6 +32,7 @@ namespace WebApi.Controllers
         }
         //eliminar una calificacion
         [HttpDelete("calificaciones")]
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         public Boolean eliminarCalificacion(int id)
         {
             return caliDAO.EliminarCalificacion(id);

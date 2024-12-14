@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Operaciones;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace WebApi.Controllers
     {
         AlumnoDAO alumnoDAO = new AlumnoDAO();
 
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpGet("alumnosP")]
         public List<AlumnosProfesor> alumnosPorProfesor(string usuario)
         {
@@ -18,6 +20,7 @@ namespace WebApi.Controllers
             return alumnos;
         }
 
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpGet("infoalumno")]
         public Alumno InfoAlumno(int id)
         {
@@ -25,6 +28,7 @@ namespace WebApi.Controllers
             return alumno;
         }
 
+        [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpPut("editaralumno")]
         public Boolean editarAlumno([FromBody]Alumno alumno) //Colocar FromBody para recibir parametros en el body de la peticion
         {

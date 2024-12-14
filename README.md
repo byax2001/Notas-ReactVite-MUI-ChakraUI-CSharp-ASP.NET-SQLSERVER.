@@ -24,10 +24,18 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
 - [Librerías y dependencias](#librerias-y-dependencias)
 - [Pasos para instalar y configurar la API](#pasos-para-instalar-y-configurar-la-api)
   - [Explicación de la API y sus componentes](#explicación-de-la-api-y-componentes)
-  - [Agregar un nuevo controlador](#agregar-un-controlador)
+  - [Agregar un nuevo Modelo](#agregar-un-nuevo-modelo)
+  - [Agregar un nuevo Controlador](#agregar-un-nuevo-controlador)
+  - [Agregar un Nuevo Servicio](#agregar-un-nuevo-servicio)
   - [Swagger para probar endpoints](#página-de-swagger-para-probar-endpoints)
   - [Formas de crear un endpoint](#formas-de-crear-un-endpoint)
 - [Configuración de CORS](#configuración-de-cors-en-la-api)
+- [Aplicación de Seguridad JWT](#jwt)
+   - [Variables de Entorno para los Tokens](#variables-de-entorno-para-los-tokens)
+   - [Instalación de Paquetes para JWT](#instalacion-de-paquetes-para-jwt)
+   - [Filtro para Validacion de Tokens](#filtro-para-validacion-de-tokens)
+   - [Creacion de Tokens](#creacion-de-tokens)
+   - [Proteccion de Rutas con JWT](#proteccion-de-rutas-con-jwt)
 - [Errores de Versiones y Actualización del Backend](#errores-de-versiones-y-actualizacion-del-backend)
 
 ## Descripción del Proyecto
@@ -318,20 +326,31 @@ La API REST, encargada de recibir y responder a las solicitudes, no se crea auto
 3. **Carpeta `Controllers`**
    - En esta carpeta se definen los controladores, los cuales establecen los endpoints de la API (los puntos de acceso o rutas de la API).
 
-4. **Agregar un Controlador**
+4. **Página de Swagger para Probar Endpoints**
+   - Al ejecutar el backend, se abrirá la página de Swagger en `https://localhost:XXXX/swagger/index.html`. Algunos navegadores pueden alertar que esta página es riesgosa, pero Swagger es una herramienta similar a Postman que permite probar los endpoints.
+
+   ![image](https://github.com/user-attachments/assets/305846bb-bb93-40ff-8613-2cc55a283f47)
+
+### **Agregar un Nuevo Modelo**
+- Hacer clic derecho en la carpeta definida como Models.
+- Seleccionar la opción Agregar > Clase.
+- Asignar un nombre representativo al modelo y posteriormente hacer clic en Agregar.
+
+> NOTA: Recordar cambiar la clase creada del Modelo de `internal` a `public`
+
+### **Agregar un Nuevo Controlador**
    - Hacer clic derecho en la carpeta `Controllers`, seleccionar **Agregar > Controlador**.
    - Eligir **API > Controlador de API en blanco**. Esto creará una plantilla similar a la siguiente:
 
    ![image](https://github.com/user-attachments/assets/2301c0c7-8efd-4f4d-bb43-72527f3d4394)
 
-   > **Nota:** La URL de los endpoints incluirá, en este caso, `/api` seguido del nombre del controlador, de modo que las rutas se verán como `http://localhost:XXXX/api/[endpoint]`.
+   > **Nota:** La URL de los endpoints incluirá, en este caso, `/api` seguido del nombre del controlador, de modo que las rutas se verán como `http://localhost:XXXX/api/controlador/[endpoint]`, en caso se desee que la ruta no tenga el apartado del nombre del controlador eliminar `/[controller]` para que las rutas queden como `http://localhost:XXXX/api/[endpoint]`.
 
-5. **Página de Swagger para Probar Endpoints**
-   - Al ejecutar el backend, se abrirá la página de Swagger en `https://localhost:XXXX/swagger/index.html`. Algunos navegadores pueden alertar que esta página es riesgosa, pero Swagger es una herramienta similar a Postman que permite probar los endpoints.
+### **Agregar un Nuevo Servicio**
+- **Clic derecho en la carpeta para Servicios > Agregar Clase > C#**
+> NOTA: Recordar cambiar la clase creada del Modelo de `internal` a `public`
 
-   ![image](https://github.com/user-attachments/assets/305846bb-bb93-40ff-8613-2cc55a283f47)
-
-6. **Formas de Crear un Endpoint**
+### **Formas de Crear un Endpoint**
 
    - **Primera Forma**  
      La URL del endpoint será `http://localhost:XXXX/api/[NombreControladorSinController]/[endpoint]`.  
@@ -453,11 +472,11 @@ Un ejemplo típico es:
 
 ---
 
-### JWT (JSON Web Token)
+## JWT
 
 El sistema JWT asegura que los endpoints de la API sean accesibles únicamente para usuarios autenticados mediante un proceso de login, otorgando un token que será validado en cada solicitud.
 
-#### Configuración de las Variables de Tokens
+### Variables de Entorno para los Tokens
 
 1. **Crear una llave privada**  
    Genera una clave privada, preferiblemente un texto complejo difícil de deducir, como un hash SHA-256. Puedes usar la herramienta [Online Converter](https://hash.online-convert.com/es/generador-sha256) para convertir un texto en un hash. Copia el resultado hexadecimal y úsalo como clave secreta. Ejemplo:  
@@ -482,24 +501,216 @@ El sistema JWT asegura que los endpoints de la API sean accesibles únicamente p
    ```json
    "Subject": "Autenticación de usuarios"
    ```
-#### Instalación de Paquetes Necesarios
-Se deben de instalar los paquetes a traves de NuGet asi como se indico en secciones anteriores en este caso sobre el componente Web Api clic derecho > Adminsitrar Paquetes Nuget  o tambien a traves del comando Install-Package  namepaquete.extension  /  Install-Package namepaquete.extension - Version  #.#.#.#
+### Instalacion de Paquetes para JWT
 
-Los paquetes a instalar son: 
-```
-3.1. Microsoft.AspNetCore.Authentication.JwtBearer
-3.2. Microsoft.EntityFrameworkCore.Tools  (si aun no se ha instalado o si no se ha realizacionado web api con una solucion que ya lo instalo)
-3.3. Newtonsoft.Json
-3.4. Swashbuckle.AspNetCore
-3.5. Swashbuckle.AspNetCore.Swagger
+Para el correcto funcionamiento del sistema JWT se deben instalar los siguientes paquetes mediante NuGet:
+
+1. **Microsoft.AspNetCore.Authentication.JwtBearer**: Para manejar la autenticación basada en JWT de modo que sus metodos permitiran construir un filtro que identificara si un token es valido o no en el archivo `Program.cs`.  
+2. **Microsoft.Extensions.Configuration.Binder**: Para acceder a configuraciones desde `appsettings.json`, las cuales serian variables de ambiente.  
+3. **Microsoft.EntityFrameworkCore.Tools** (si aún no se ha instalado).  
+4. **Newtonsoft.Json**: Para trabajar con JSON de forma mas simple.  
+5. **Swashbuckle.AspNetCore** y **Swashbuckle.AspNetCore.Swagger**: Para generar documentación Swagger.  
+
+
+
+### Filtro para Validacion de Tokens
+En la sección de construcción del builder en el archivo `Program.cs`, antes de ejecutar `builder.Build()`, se deben agregar los servicios de autenticación y definir los parámetros de validación de tokens. El código a incluir es el siguiente:
+
+```csharp
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true, // Habilita la validación del emisor del token.
+            ValidateAudience = true, // Habilita la validación del público objetivo del token.
+            ValidateLifetime = true, // Verifica si el token ha expirado.
+            ValidateIssuerSigningKey = true, // Valida la clave utilizada para firmar el token.
+            ValidIssuer = builder.Configuration["Jwt:Issuer"], // Configura el emisor válido, obtenido del archivo appsettings.json.
+            ValidAudience = builder.Configuration["Jwt:Audience"], // Configura el público válido, obtenido del archivo appsettings.json.
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])) // Define la clave secreta.
+        };
+    });
 ```
 
+
+
+ A través de builder.configuration se obtienen las variables de ambiente configuradas en archivo `appsettings.json` necesarias para la configuración del JWT. Un ejemplo del contenido requerido es:
+
+```json
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*",
+    "Jwt": {
+        "Key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", // Clave secreta para firmar el token.
+        "Issuer": "https://localhost:7085", // Emisor del token.
+        "Audience": "https://localhost:7085", // Público objetivo del token.
+        "Subject": "apiWebJWT" // Contexto del token, puede ser útil para identificar su propósito.
+    }
+}
+```
+Para que la autenticación JWT sea efectiva, se debe habilitar en la canalización de middleware de la aplicación. Esto se realiza agregando el siguiente código entre `app.UseHttpsRedirection()` y `app.UseAuthorization()`:
+
+```csharp
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication(); //<-----------
+
+app.UseAuthorization();
+
+```
+
+- **`app.UseAuthentication()`**: Habilita el middleware que verifica las credenciales enviadas por el cliente. Es necesario para validar los tokens JWT en cada solicitud.
+
+- **`app.UseAuthorization()`**: Se encarga de validar que el usuario autenticado tenga los permisos necesarios para acceder a un recurso específico.
+
+
+### Creacion de Tokens
+
+La generación de un token JWT (JSON Web Token) es un proceso central en la autenticación y autorización de aplicaciones web. En este caso la clase `TokenJwtDAO` se encarga de generar un token JWT utilizando las configuraciones definidas en el archivo `appsettings.json`. Esta clase incluye:
+
+- **Dependencias principales**: 
+  - **`IConfiguration`**: Permite acceder a los valores de configuración.
+  - **`Profesor`**: Representa al usuario autenticado, cuyos datos se incluirán como *claims* en el token.
+  - **`Jwt`**: Modelo creado para estructurar las variable definida en `appsettings.json`.
+
+**Definición del modelo `Jwt`:**
+
+```csharp
+namespace backend.Models
+{
+    // Modelo para simplificar el acceso a configuraciones JWT
+    public class Jwt
+    {
+        public string Key { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public string Subject { get; set; }
+    }
+}
+```
+**Código de la Clase `TokenJwtDAO`:**
+
+```csharp
+public class TokenJwtDAO
+{
+    private IConfiguration iconfiguration;
+    private Profesor profesor;
+    public TokenJwtDAO(IConfiguration configuration, Profesor _profesor) {
+        iconfiguration = configuration;
+        profesor = _profesor;
+    }
+
+    public string GetToken()
+    {
+        // Para hacer esto es necesario instalar la librería Microsoft.Extensions.Configuration.Binder
+        // La cual permite acceder a los datos del appsettings.json desde cualquier parte del proyecto
+        var jwt = iconfiguration.GetSection("Jwt").Get<Jwt>();
+        Console.WriteLine("LA KEY ES: ");
+        Console.WriteLine(jwt.Key);
+        var claims = new[]{
+            new Claim(JwtRegisteredClaimNames.Sub,jwt.Subject), // OPCIONAL
+            new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()), // OPCIONAL
+            new Claim(JwtRegisteredClaimNames.Iat,DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64), // OPCIONAL
+            // Lo siguiente es para agregar un claim personalizado
+            new Claim("usuario",profesor.Usuario), 
+        };
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)); 
+        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: jwt.Issuer, // OPCIONAL
+            audience: jwt.Audience, // OPCIONAL
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(30), // El token expira en 30 minutos
+            signingCredentials: signIn
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
+```
+- **Claims**: 
+  - Los *claims* son declaraciones sobre una entidad (por ejemplo, un usuario). Pueden incluir información estándar como:
+    - `JwtRegisteredClaimNames.Sub`: Identificador del sujeto del token.
+    - `JwtRegisteredClaimNames.Jti`: Identificador único del token.
+    - `JwtRegisteredClaimNames.Iat`: Marca temporal que indica cuándo fue emitido el token.
+  - También pueden definirse *claims* personalizados, como `"usuario"`, que representa un atributo del usuario autenticado.
+
+- **Key (`jwt.Key`)**:
+  - Es la clave secreta utilizada para firmar el token. Debe mantenerse segura y se configura en el archivo `appsettings.json`.
+  - Ejemplo en `appsettings.json`:
+    ```json
+    {
+        "Jwt": {
+            "Key": "clave_secreta_12345",
+            "Issuer": "https://localhost:7085",
+            "Audience": "https://localhost:7085",
+            "Subject": "apiWebJWT"
+        }
+    }
+    ```
+
+- **SymmetricSecurityKey**: Utiliza la clave secreta (`jwt.Key`) para garantizar la integridad del token.
+- **SigningCredentials**: Define el algoritmo de firma utilizado para proteger el token. En este caso, se utiliza `HmacSha256`.
+- **Tiempo de Expiración (`expires`)**: Define cuánto tiempo será válido el token antes de expirar. En el ejemplo, se establece en 30 minutos.
+- **Instancia del Token**: Se genera utilizando `JwtSecurityToken` y se escribe como una cadena de texto utilizando `JwtSecurityTokenHandler`.
+
+
+
+
+### Proteccion de Rutas con JWT
+Para proteger los endpoints, utiliza el atributo `[Authorize]`. Este atributo valida automáticamente si el token enviado en la solicitud es válido. Si no lo es, devuelve un error 401.
+
+**Ejemplo:**
+
+```csharp
+[Authorize] // Este endpoint solo será accesible si el usuario proporciona un token válido.
+[HttpGet("infoalumno")]
+public Alumno InfoAlumno(int id)
+{
+    var alumno = alumnoDAO.seleccionarAlumno(id);
+    return alumno;
+}
+```
+
+- **[Authorize]** Permite proteger recursos específicos para que solo sean accesibles por usuarios autenticados.
+
+- No se debe aplicar **[Authorize]** en endpoints que sean públicos, como los de login o registro, ya que impediría a los usuarios no autenticados acceder a ellos.
 
 
 
 
 
 ---
+### Uso de Newtonsoft.Json para manejo de JSON de forma sencilla
+
+Con `JSON Convert`, la toma de variables en una petición común se realizaría de la siguiente manera:
+
+```csharp
+[HttpPost("login")]
+public string Login([FromBody] JObject profesor)
+{
+    var prof = profesorDAO.Login(profesor.Usuario, profesor.Pass);
+    if (prof != null)
+    {
+        return prof.Usuario;
+    }
+    return "no existe";
+}
+```
+Para utilizar `JObject`, se debe agregar la librería `Newtonsoft.Json`. Se puede instalar esta librería desde el `NuGet Package Manager`.
+
+---
+
+
+
 ### Errores de Versiones y Actualizacion del Backend
 
 En el caso de que el backend esté dando errores de versión, o ya no se puedan instalar librerías en NuGet porque la versión .NET del proyecto está desactualizada, realiza lo siguiente:

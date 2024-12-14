@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +16,23 @@ builder.Services.AddCors(policyBuilder => policyBuilder.AddDefaultPolicy
     (policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));
 //--------------------------------------------------------------------------------------------
 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,//OPCIONAL ValidateIssuer = false
+            ValidateAudience = true,//OPCIONAL ValidateAudience = false
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"], //OPCIONAL
+            ValidAudience = builder.Configuration["Jwt:Audience"], //OPCIONAL
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+        };
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +45,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors(); //Habilitar CORS
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
