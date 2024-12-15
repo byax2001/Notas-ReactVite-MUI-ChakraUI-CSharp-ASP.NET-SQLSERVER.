@@ -21,5 +21,7 @@ namespace backend.Models
         public string Email { get; set; } = null!;
         
         public string Asignatura { get; set; } = null!;
+
+        public int MatriculaId { get; set; }
     }
 }

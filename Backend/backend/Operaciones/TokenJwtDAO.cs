@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,14 +12,23 @@ using System.Threading.Tasks;
 
 namespace backend.Operaciones
 {
-   
+
     public class TokenJwtDAO
     {
         private IConfiguration iconfiguration;
         private Profesor profesor;
-        public TokenJwtDAO(IConfiguration configuration, Profesor _profesor) {
+
+        private string token;
+        //Para la creación del token
+        public TokenJwtDAO(IConfiguration configuration, Profesor _profesor)
+        {
             iconfiguration = configuration;
             profesor = _profesor;
+        }
+        //Para la lectura del token
+        public TokenJwtDAO(string _token)
+        {
+            token = _token;
         }
 
         public string GetToken()
@@ -41,7 +51,7 @@ namespace backend.Operaciones
             //esta key se creo manualmente y se puede cambiar por cualquier otra
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            
+
             var token = new JwtSecurityToken(
                 issuer: jwt.Issuer, //OPCIONAL
                 audience: jwt.Audience, //OPCIONAL
@@ -52,6 +62,36 @@ namespace backend.Operaciones
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public string getUsuario()
+        {
+            try
+            {
+                var token = getTokenAuth();
+                var tokenHandler = new JwtSecurityTokenHandler();
+                if (tokenHandler.CanReadToken(token))
+                {
+                    var jwtToken = tokenHandler.ReadJwtToken(token);
+                    var usuarioClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "usuario");
+                    return usuarioClaim?.Value ?? throw new UnauthorizedAccessException("Usuario no encontrado en el token.");
+                }
+                throw new UnauthorizedAccessException("Token inválido.");
+            }
+            catch (Exception ex)
+            {
+                throw new UnauthorizedAccessException("Error al procesar el token.", ex);
+            }
+        }
+
+        public string getTokenAuth()
+        {
+            if (!string.IsNullOrEmpty(token) && token.StartsWith("Bearer "))
+            {
+                return token.Replace("Bearer ", "");
+            }
+            throw new UnauthorizedAccessException("Token no válido o no proporcionado.");
+        }
 
     }
+
+    
 }

@@ -3,16 +3,17 @@ import DataTable from "react-data-table-component";
 import BasePage from "../../components/BasePage/BasePage";
 import ButtonDelete from "../../components/EliminarAlumnosButton/ButtonDelete";
 import { getAlumnosProfesor } from "../../services/data";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import { customStyles } from "./components/styleTable";
-import { NoDataComponent } from "./components/NoDataComponent";
+import { NoDataTableComponent } from "../../components/NoDataTableComponent/NoDataTableComponent";
 import { Button } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 
-const TableAlumns = ({data, updateTableF}) => {
-  
+const TableAlumns = ({data, updateTableF, navigate}) => {
+
   const columns = [
     { name: "DNI", selector: (row) => row.dni, center: true.toString() },
     {
@@ -36,7 +37,7 @@ const TableAlumns = ({data, updateTableF}) => {
     {
       // A esta columna no se le coloca un nombre, ya que se usará para mostrar un botón
       cell: (row) => (
-        <Button colorScheme="blue" size="sm">
+        <Button colorScheme="blue" size="sm" onClick={() => navigate(`/editAl/${row.id}`)} >
           <FaEdit /> Editar
         </Button>
       ),
@@ -45,7 +46,7 @@ const TableAlumns = ({data, updateTableF}) => {
     {
       // A esta columna no se le coloca un nombre, ya que se usará para mostrar un botón
       cell: (row) => (
-        <Button colorScheme="blue" size="sm">
+        <Button colorScheme="blue" size="sm" onClick={()=>navigate(`/calificar/${row.matriculaId} `)} >
           <MdDownloadDone /> Calificar
         </Button>
       ),
@@ -65,7 +66,7 @@ const TableAlumns = ({data, updateTableF}) => {
         columns={columns}
         data={data}
         customStyles={customStyles}
-        noDataComponent={<NoDataComponent />}
+        noDataComponent={<NoDataTableComponent />}
         pagination
         striped //  Habilita el alternar colores de fila de modo que las filas pares e impares tengan diferentes colores en la tabla entre sí
         // además de agregar un color de fondo a la fila que se resalta cuando se pasa el mouse sobre ella
@@ -78,6 +79,7 @@ const TableAlumns = ({data, updateTableF}) => {
 
 export default function Home() {
   const [updateTable, SetUpdateTable]=useState(true);
+  const navigate = useNavigate();
   const [data, setData] = useState([
     {
       id: 1,
@@ -120,8 +122,8 @@ export default function Home() {
   }, [updateTable]);
 
   const dataTable = async() => {
-    const userP = sessionStorage.getItem("user");
-    if(userP){
+    const token = sessionStorage.getItem("token");
+    if(token){
       // Se puede manejar asi 
 
       /*const data = await getAlumnosProfesor(userP);
@@ -133,9 +135,9 @@ export default function Home() {
       });*/
 
       // O asi
-      getAlumnosProfesor(userP).then(setData);
+      getAlumnosProfesor(token).then(setData);
     }
   }
 
-  return <BasePage bodyPage={<TableAlumns data={data} updateTableF={()=>SetUpdateTable(!updateTable)} />} />;
+  return <BasePage bodyPage={<TableAlumns data={data} updateTableF={()=>SetUpdateTable(!updateTable)} navigate={navigate} />} />;
 }

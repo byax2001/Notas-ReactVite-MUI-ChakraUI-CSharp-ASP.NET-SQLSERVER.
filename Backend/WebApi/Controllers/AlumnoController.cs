@@ -11,13 +11,29 @@ namespace WebApi.Controllers
     public class AlumnoController : ControllerBase
     {
         AlumnoDAO alumnoDAO = new AlumnoDAO();
+        public IHttpContextAccessor httpContext;
+
+        public AlumnoController(IHttpContextAccessor _httpContext)
+        {
+            httpContext = _httpContext;
+        }
 
         [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido
         [HttpGet("alumnosP")]
-        public List<AlumnosProfesor> alumnosPorProfesor(string usuario)
+        public List<AlumnosProfesor> alumnosPorProfesor()
         {
-            var alumnos = alumnoDAO.alumnosPorProfesor(usuario);
-            return alumnos;
+            try
+            {
+                var token = httpContext.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+                TokenJwtDAO jwtDAO = new TokenJwtDAO(token);
+                var usuario = jwtDAO.getUsuario();
+                var alumnos = alumnoDAO.alumnosPorProfesor(usuario);
+                return alumnos;
+            }catch(Exception e)
+            {
+                return [];
+            }
+            
         }
 
         [Authorize] //Solo se puede acceder a este metodo si se tiene un token valido

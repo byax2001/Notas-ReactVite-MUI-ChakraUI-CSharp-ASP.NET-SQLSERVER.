@@ -1,7 +1,7 @@
 import { HStack, Text, Icon, Box } from "@chakra-ui/react";
 import { FaDatabase } from "react-icons/fa";
 
-export const NoDataComponent = () => {
+export const NoDataTableComponent = () => {
   return (
     <HStack
       spacing={4}

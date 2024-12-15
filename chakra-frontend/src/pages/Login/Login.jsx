@@ -30,7 +30,7 @@ export default function Login() {
     e.preventDefault();
     const { usuario, pass } = Object.fromEntries(new FormData(e.target));
     const response = await login(usuario, pass);
-    if(response=="no existe"){
+    if(response.status!=true){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -43,7 +43,7 @@ export default function Login() {
       // mientras que el segundo se mantiene guardado hasta que se borre manualmente o se borren los datos del navegador
       // sessionStorage es util para mantener la sesion activa mientras se navega por la pagina
       // En este caso se prefirio usar SessionStorage
-      sessionStorage.setItem("user",response);
+      sessionStorage.setItem("token",response.token);
 
       Swal.fire({
         icon: 'success',

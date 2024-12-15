@@ -4,6 +4,7 @@ import { Button } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { deleteAlumno } from "../../services/data";
 export default function ButtonDelete({ idAlumno, updateTableF }) {
+
   const handleClick = async () => {
     Swal.fire({
       title: "¿Estás seguro de eliminar este alumno?",
@@ -15,7 +16,7 @@ export default function ButtonDelete({ idAlumno, updateTableF }) {
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.isConfirmed) { //Si se confirma la eliminación en el Swal se procede a eliminar el alumno
         deleteAlumno(idAlumno).then((res) => {
           if (res==="true") {
             Swal.fire("Eliminado", "El alumno ha sido eliminado", "success");

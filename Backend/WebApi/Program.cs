@@ -33,6 +33,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         };
     });
 
+builder.Services.AddHttpContextAccessor(); //Para poder acceder al HttpContext desde cualquier parte del proyecto
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -36,6 +36,11 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
    - [Filtro para Validacion de Tokens](#filtro-para-validacion-de-tokens)
    - [Creacion de Tokens](#creacion-de-tokens)
    - [Proteccion de Rutas con JWT](#proteccion-de-rutas-con-jwt)
+- [Leer y Manipular Token JWT en Backend](#leer-y-manipular-token-en-backend)
+   - [Extraer Token del Header Authorization](#extraer-token-del-header-authorization)
+   - [Manipular Token](#manipular-token)
+      - [Limpiar Token](#limpiar-el-token)
+      - [Obtener información del Token](#extraer-informacion-del-token)
 - [Errores de Versiones y Actualización del Backend](#errores-de-versiones-y-actualizacion-del-backend)
 
 ## Descripción del Proyecto
@@ -501,6 +506,8 @@ El sistema JWT asegura que los endpoints de la API sean accesibles únicamente p
    ```json
    "Subject": "Autenticación de usuarios"
    ```
+---
+
 ### Instalacion de Paquetes para JWT
 
 Para el correcto funcionamiento del sistema JWT se deben instalar los siguientes paquetes mediante NuGet:
@@ -511,7 +518,7 @@ Para el correcto funcionamiento del sistema JWT se deben instalar los siguientes
 4. **Newtonsoft.Json**: Para trabajar con JSON de forma mas simple.  
 5. **Swashbuckle.AspNetCore** y **Swashbuckle.AspNetCore.Swagger**: Para generar documentación Swagger.  
 
-
+---
 
 ### Filtro para Validacion de Tokens
 En la sección de construcción del builder en el archivo `Program.cs`, antes de ejecutar `builder.Build()`, se deben agregar los servicios de autenticación y definir los parámetros de validación de tokens. El código a incluir es el siguiente:
@@ -569,7 +576,7 @@ app.UseAuthorization();
 - **`app.UseAuthentication()`**: Habilita el middleware que verifica las credenciales enviadas por el cliente. Es necesario para validar los tokens JWT en cada solicitud.
 
 - **`app.UseAuthorization()`**: Se encarga de validar que el usuario autenticado tenga los permisos necesarios para acceder a un recurso específico.
-
+---
 
 ### Creacion de Tokens
 
@@ -663,7 +670,7 @@ public class TokenJwtDAO
 - **Instancia del Token**: Se genera utilizando `JwtSecurityToken` y se escribe como una cadena de texto utilizando `JwtSecurityTokenHandler`.
 
 
-
+---
 
 ### Proteccion de Rutas con JWT
 Para proteger los endpoints, utiliza el atributo `[Authorize]`. Este atributo valida automáticamente si el token enviado en la solicitud es válido. Si no lo es, devuelve un error 401.
@@ -684,9 +691,73 @@ public Alumno InfoAlumno(int id)
 
 - No se debe aplicar **[Authorize]** en endpoints que sean públicos, como los de login o registro, ya que impediría a los usuarios no autenticados acceder a ellos.
 
+--- 
 
+### Leer y Manipular Token en Backend
 
+### Extraer Token del Header Authorization
 
+Antes de construir la aplicación (`var app = builder.Build()`), es necesario agregar la siguiente configuración en el archivo `Program.cs`:
+
+```csharp
+builder.Services.AddHttpContextAccessor(); //Para poder acceder al HttpContext desde cualquier parte del proyecto
+```
+En el controlador donde se desee obtener el token, agregar lo siguiente:
+
+```csharp
+public IHttpContextAccessor httpContext;
+
+public NameController(IHttpContextAccessor _httpContext)
+{
+    httpContext = _httpContext;
+}
+
+```
+Dentro de cada endpoint donde se desea utilizar, obtener el token como string con el siguiente código:
+
+```csharp
+var token = httpContext.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+```
+### Manipular Token
+#### Limpiar el token
+Para eliminar el prefijo "Bearer " del token:
+
+```csharp
+ public string getTokenAuth()
+ {
+     if (!string.IsNullOrEmpty(token) && token.StartsWith("Bearer "))
+     {
+         return token.Replace("Bearer ", "");
+     }
+     throw new UnauthorizedAccessException("Token no válido o no proporcionado.");
+ }
+```
+---
+
+#### Extraer informacion del token
+Para extraer el usuario del token:
+
+```csharp
+ public string getUsuario()
+ {
+     try
+     {
+         var token = getTokenAuth();
+         var tokenHandler = new JwtSecurityTokenHandler();
+         if (tokenHandler.CanReadToken(token))
+         {
+             var jwtToken = tokenHandler.ReadJwtToken(token);
+             var usuarioClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "usuario");
+             return usuarioClaim?.Value ?? throw new UnauthorizedAccessException("Usuario no encontrado en el token.");
+         }
+         throw new UnauthorizedAccessException("Token inválido.");
+     }
+     catch (Exception ex)
+     {
+         throw new UnauthorizedAccessException("Error al procesar el token.", ex);
+     }
+ }
+```
 
 ---
 ### Uso de Newtonsoft.Json para manejo de JSON de forma sencilla
