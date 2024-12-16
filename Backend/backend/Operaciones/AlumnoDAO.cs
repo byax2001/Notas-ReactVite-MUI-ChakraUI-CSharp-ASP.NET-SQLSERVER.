@@ -148,7 +148,7 @@ namespace backend.Operaciones
                               Edad = a.Edad,
                               Email = a.Email,
                               Asignatura = asig.Nombre,
-                              MatriculaId = m.AsignaturaId
+                              MatriculaId = m.Id
                           }; // Sera como una tabla respuesta de la consulta y para este caso sera parte de la respuesta json
 
             return alumnos.ToList();

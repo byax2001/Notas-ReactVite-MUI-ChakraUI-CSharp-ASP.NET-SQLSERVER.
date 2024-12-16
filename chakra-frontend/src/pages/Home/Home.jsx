@@ -13,7 +13,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDownloadDone } from "react-icons/md";
 
 const TableAlumns = ({data, updateTableF, navigate}) => {
-
+  console.log(data);
   const columns = [
     { name: "DNI", selector: (row) => row.dni, center: true.toString() },
     {

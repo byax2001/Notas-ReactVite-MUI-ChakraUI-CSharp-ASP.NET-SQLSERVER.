@@ -84,7 +84,6 @@ export default function Login() {
           <form onSubmit={handleSubmit}>
             <FormControl id="usuario" mb="4">
               <FormLabel>
-                {" "}
                 <Text fontSize={"xl"} fontWeight={"semibold"} mb={1}>
                   Usuario
                 </Text>

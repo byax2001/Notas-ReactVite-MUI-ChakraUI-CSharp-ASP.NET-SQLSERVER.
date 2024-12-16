@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { customStyles } from "./components/styleTable";
 import DataTable from "react-data-table-component";
 import BasePage from "../../components/BasePage/BasePage";
-import { Button, Input, Box, Text } from "@chakra-ui/react";
+import { Button, Input, Box, Text, Grid, GridItem} from "@chakra-ui/react";
 import { addCalificacion, getCalificaciones, deleteCalificacion } from "../../services/data";
 import { NoDataTableComponent } from "../../components/NoDataTableComponent/NoDataTableComponent";
 
@@ -53,7 +53,9 @@ const CalificacionesTable = ({ data, updateTableF, idMatr}) => {
     },[data])
 
     return (
-        <div>
+        <Box
+           p={5}
+        >
             <DataTable
                 title="Calificaciones"
                 columns={columns}
@@ -72,19 +74,35 @@ const CalificacionesTable = ({ data, updateTableF, idMatr}) => {
             >
                 <Text fontSize="xl" fontWeight="bold" textAlign="center">Nota Real: {calificacionReal}</Text>
             </Box>
-            {/* Inputs para añadir nuevas calificaciones */}
-            <div style={{ marginTop: "20px", display: "flex", gap: "10px", alignItems: "center" }}>
-                <Input
-                    placeholder="Descripción"
-                    id="newDescripcion"
-                    size="sm"
-                />
+            {/* Inputs para añadir nuevas calificaciones, Uso de Diseño Responsive */}
+
+            <Grid
+                templateColumns={{
+                    base: "repeat(1, 1fr)",
+                    sm: "repeat(4, 1fr)",
+                    md: "repeat(10, 1fr)",
+                    lg: "repeat(10,1fr)",
+                }} // Configuración de columnas responsivas
+                gap={4}
+                justifySelf={{ base: "center", sm: "auto", md: "auto", lg: "auto" }} // Alineación horizontal
+                alignItems="center"
+            >
+                <GridItem colSpan={{ base: 1, sm: 2, md: 3, lg: 3 }}>
+                    <Input
+                        placeholder="Descripción"
+                        id="newDescripcion"
+                        size="sm"
+                    />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, sm: 2, md: 3, lg: 3 }}>
                 <Input
                     placeholder="Nota"
                     id="newNota"
                     size="sm"
                     type="number"
                 />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, sm: 2, md: 3, lg: 3 }}>
                 <Input
                     placeholder="Porcentaje"
                     id="newPorcentaje"
@@ -97,6 +115,8 @@ const CalificacionesTable = ({ data, updateTableF, idMatr}) => {
                         }
                     }}
                 />
+                </GridItem>
+                <GridItem colSpan={{ base: 1, sm: 2, md: 1, lg: 1 }} justifySelf={{ base: "center", sm: "auto", md: "center", lg: "center" }}>
                 <Button
                     onClick={() => {
                         const descripcion = document.getElementById("newDescripcion").value;
@@ -120,8 +140,10 @@ const CalificacionesTable = ({ data, updateTableF, idMatr}) => {
                 >
                     Agregar
                 </Button>
-            </div>
-        </div>
+                </GridItem>
+
+            </Grid>
+        </Box>
     );
 
 }

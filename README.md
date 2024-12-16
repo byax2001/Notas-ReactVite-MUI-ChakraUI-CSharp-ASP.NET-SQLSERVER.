@@ -18,6 +18,7 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
   - [Iconos en `Chakra`](#iconos-en-chakra)
   - [Formularios con `Chakra UI`](#formularios-con-chakra-ui)
   - [Tablas en `Chakra UI`](#tablas-en-chakra-ui)
+  - [Diseño Responsivo](#diseño-responsive-chakra)
 
 ## Backend
 - [Configuración del proyecto base](#base-del-proyecto)
@@ -45,6 +46,9 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
 
 ## Descripción del Proyecto
 El proyecto consistira en una pagina web de calificaciones en la cual x , para dichos metodos se realizaran desde peticionese inserciones normales hasta inner joins
+
+---
+---
 
 ## Frontend `React Vite` y `Material UI`
 
@@ -164,6 +168,12 @@ npm i @mui/lab
 npm i react-router-dom
 ```
 
+### Diseño Responsive Material UI
+Para más detalles sobre el diseño responsivo implementado con Material UI, consultar el [README de Diseño Responsivo Material UI](https://github.com/byax2001/Pagina-CSharp-ASP.NET-REACT-SQLSERVER/tree/main/mui-frontend)
+
+
+---
+---
 
 ## Frontend `React Vite` y `Chakra UI`
 ### Instalar Chakra UI
@@ -241,8 +251,17 @@ npm i react-data-table-component
 ```jsx
 import DataTable from "react-data-table-component";
 ```
-
 Con esta solución, puedes crear tablas con funcionalidades avanzadas como paginación, ordenamiento y personalización de estilos.
+
+---
+
+### Diseño Responsive Chakra:
+Para más detalles sobre el diseño responsivo implementado con Chakra UI, consultar el [README de Diseño Responsivo Chakra UI](https://github.com/byax2001/Pagina-CSharp-ASP.NET-REACT-SQLSERVER/tree/main/chakra-frontend)
+
+
+
+---
+---
 
 ## Backend (ASP.NET Core)
 

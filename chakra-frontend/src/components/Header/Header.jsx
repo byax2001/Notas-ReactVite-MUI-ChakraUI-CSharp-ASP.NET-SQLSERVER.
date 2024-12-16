@@ -30,11 +30,13 @@ export default function HeaderPage() {
       boxShadow="md"
       mb={2}
     >
-      {/* El templateColumns es una propiedad de Grid que permite definir el número de columnas que tendrá el grid segun el tamaño
-    de la pantalla. En este caso se define que en pantallas pequeñas se tendrá una sola columna y en pantallas medianas se tendrán
-    3 columnas */}
-      {/* Esto junto con el colspan permite definir el tamaño de las columnas en cada tamaño de pantalla de los elementos
-    haciendo mas personalizable el diseño responsivo */}
+      {/* 
+      #. El templateColumns es una propiedad de Grid que permite definir el número de columnas que tendrá el grid segun el tamaño
+      de la pantalla. En este caso se define que en pantallas pequeñas se tendrá una sola columna y en pantallas medianas se tendrán
+      3 columnas 
+      #. Esto junto con el colspan permite definir el tamaño de las columnas en cada tamaño de pantalla de los elementos
+      haciendo mas personalizable el diseño responsivo 
+    */}
       <Grid
         templateColumns={{
           base: "repeat(1, 1fr)",
