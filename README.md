@@ -1,4 +1,4 @@
-# Pagina-CSharp-ASP.NET-REACT-SQLSERVER
+# Pagina de Notas React-Vite-MUI-ChakraUI CSharp-ASP.NET-REACT-SQLSERVER
 Se desarrollará una página web utilizando C# y ASP.NET para el backend, React para el frontend y SQL Server como base de datos. El proyecto incluirá dos versiones del frontend, ambas creadas con React Vite: una implementará Material-UI (MUI) y la otra Chakra UI. Se comparara el rendimiento y estilo de ambas tecnologias.
 
 
@@ -13,6 +13,7 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
   - [Instalar MUI](#instalar-mui)
   - [Instalación de `CssBaseline` para resetear estilos](#instalación-de-cssbaseline-para-resetear-estilos-del-navegador)
   - [Instalación de MUI Lab y React Router](#instalación-de-mui-lab-y-react-router)
+  - [Diseño Responsivo](#diseño-responsive-material-ui)
 - [Frontend con `React`, `Vite` y `Chakra UI`](#frontend-react-vite-y-chakra-ui)
   - [Instalar `Chakra UI`](#instalar-chakra-ui)
   - [Iconos en `Chakra`](#iconos-en-chakra)
@@ -45,7 +46,14 @@ Se desarrollará una página web utilizando C# y ASP.NET para el backend, React 
 - [Errores de Versiones y Actualización del Backend](#errores-de-versiones-y-actualizacion-del-backend)
 
 ## Descripción del Proyecto
-El proyecto consistira en una pagina web de calificaciones en la cual x , para dichos metodos se realizaran desde peticionese inserciones normales hasta inner joins
+El proyecto consistirá en el desarrollo de una página web donde un profesor podrá iniciar sesión y gestionar un listado de alumnos asignados a las asignaturas que imparte. Para cada matrícula, el profesor tendrá la opción de eliminarla, agregar tareas con sus respectivas calificaciones, y editar la información del alumno. Además, podrá crear nuevos alumnos e indicar directamente a qué asignatura se matricularán. A continuación, se presentarán algunos ejemplos de la interfaz.
+
+![Login](https://github.com/user-attachments/assets/5600a315-7559-4ec8-809a-e2e0d0c4aef7)
+![Home](https://github.com/user-attachments/assets/bab88b9b-fe46-48c0-857c-1269b232779e)
+![Regis](https://github.com/user-attachments/assets/7ab362d1-ab15-48bc-a19a-ff562b2a2ecc)
+![Editar](https://github.com/user-attachments/assets/a8b5b857-3c66-420d-838f-3cd08817306a)
+![cali](https://github.com/user-attachments/assets/8cb72802-b352-4500-8746-bd3e99130892)
+![EliminarMatriculacion](https://github.com/user-attachments/assets/3b46abee-f7ff-434f-afd8-b0efd4cbcec3)
 
 ---
 ---
@@ -169,7 +177,7 @@ npm i react-router-dom
 ```
 
 ### Diseño Responsive Material UI
-Para más detalles sobre el diseño responsivo implementado con Material UI, consultar el [README de Diseño Responsivo Material UI](https://github.com/byax2001/Pagina-CSharp-ASP.NET-REACT-SQLSERVER/tree/main/mui-frontend)
+Para más detalles sobre el diseño responsivo implementado con Material UI, consultar el [README de Diseño Responsivo Material UI](https://github.com/byax2001/Notas-ReactVite-MUI-ChakraUI-CSharp-ASP.NET-SQLSERVER./tree/main/mui-frontend)
 
 
 ---
@@ -256,7 +264,7 @@ Con esta solución, puedes crear tablas con funcionalidades avanzadas como pagin
 ---
 
 ### Diseño Responsive Chakra:
-Para más detalles sobre el diseño responsivo implementado con Chakra UI, consultar el [README de Diseño Responsivo Chakra UI](https://github.com/byax2001/Pagina-CSharp-ASP.NET-REACT-SQLSERVER/tree/main/chakra-frontend)
+Para más detalles sobre el diseño responsivo implementado con Chakra UI, consultar el [README de Diseño Responsivo Chakra UI](https://github.com/byax2001/Notas-ReactVite-MUI-ChakraUI-CSharp-ASP.NET-SQLSERVER./tree/main/mui-frontend)
 
 
 
